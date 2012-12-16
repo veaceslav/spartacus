@@ -1,0 +1,22 @@
+#village1{
+  top: 10px;
+  left: 10px;
+  }
+#village2{
+  top: 30px;
+  left: 30px;
+}
+
+#map {
+  margin-left: 0;
+  background:url('../images/background.jpg') no-repeat;
+  position: relative;
+  width: 1306px;
+  height: 738px;
+}
+.village {
+  background:url('../images/village.png') no-repeat;
+  position: absolute;
+  width: 128px;
+  height: 128px;  
+}

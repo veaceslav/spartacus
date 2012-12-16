@@ -1,0 +1,24 @@
+TODO:
+
+Map Size
+
+width: 1307
+height: 738
+
+Village size: 
+
+Width:128;
+Height:128;
+
+/** Sa nu depaseasca dim hartii **/
+
+left>0
+top>0
+
+maxleft = map.width-village.width
+maxtop = map.height-village.height
+
+/** Sa nu faca overlap **/
+
+|village1.left - village2.left| > 128 ||
+|village2.top - village2.top| > 128
