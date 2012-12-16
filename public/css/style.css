@@ -20,3 +20,27 @@
   width: 128px;
   height: 128px;  
 }
+
+#popup {
+  position: absolute;
+  z-index: 1000;
+  background:url("../images/papirus.png") no-repeat;
+  width: 267px;
+  height: 400px;
+  top:200px;
+  left: 700px;
+
+}
+
+#closeP {
+  position: relative;
+  top: 350px;
+  left: 110px;
+}
+
+#Info {
+  position: absolute;
+  top: 80px;
+  left: 50px;
+}
+

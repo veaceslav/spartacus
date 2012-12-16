@@ -13,11 +13,16 @@ app.get('/', function(req, res){});
 server.listen(8080);
 
 //var io = require('socket.io').listen(3000);
+var datab = require('./database.js');
 
 io.sockets.on('connection',function(socket){
 	socket.emit('news',TR.myVillages);
-	socket.on('my other data', function(data){
+	socket.on('info', function(data){
 		console.log(data);
+    datab.getElement(data.my,function(rez){
+          socket.emit('respond',rez);
+    });
+
 	});
 }); 
 
@@ -31,15 +36,15 @@ TR.MAX_HEIGHT = 738;
 TR.VILLAGE_W = 128;
 TR.VILLAGE_H =128;
 
-function initialize()
+datab.connect(function()
 {
-	for(var i=0;i<8;i++)
-	{
-		getVillage();
-	}
-	console.log(TR.myVillages);
-}
-initialize();
+  //datab.populateDb();
+  datab.getList(function(docs){
+    //console.log(docs);
+    TR.myVillages = docs;
+  });
+});
+
 /** Get a random nr from Interval **/
 function randomFromInterval(from,to)
 {

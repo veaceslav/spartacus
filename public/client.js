@@ -2,31 +2,74 @@
 window.onload = function(){
  var socket = io.connect();
  socket.on('news',function(data){
- 	console.log(data);
+ 	console.log("Am primit de la server");
  	for( var i=0;i<data.length;i++)
  	{
- 		console.log(data[i]);
  		var village = document.createElement("div");
  		village.className = "village";
  		village.setAttribute('id',data[i].id);
- 		village.style.top = data[i].height+"px";
- 		village.style.left = data[i].width+"px";
+ 		village.style.top = data[i].top+"px";
+ 		village.style.left = data[i].left+"px";
  		document.querySelector("#map").appendChild(village);
  	}
- 	socket.emit('my other data',{my: data});
-
-
- 	var map = document.querySelector("#map");
-
- 	map.addEventListener("click", function(event){
- 		//console.log(event);
-
- 		if(event.target.nodeName == "DIV")
- 			console.log(event.target.id);
- 	});
-
-
+ 	//socket.emit('my other data',{my: data});
 
  });
+socket.on('respond',function(resp){
+ 				console.log("Am primit raspuns" + JSON.stringify(resp));
+
+	 			var popup = document.createElement("div");
+	 			popup.setAttribute('id', "popup");
+
+	 			var text = document.createElement("div");
+	 			text.setAttribute('id',"Info");
+
+	 			var name = document.createElement("p");
+	 			name.innerHTML = "Name: " + resp.name;
+
+	 			text.appendChild(name);
+
+	 			var population = document.createElement("p");
+	 			population.innerHTML = "Population: " + resp.population;
+	 			text.appendChild(population);
+
+	 			var desc = document.createElement("p");
+	 			desc.innerHTML = "Description: " + resp.description;
+	 			text.appendChild(desc);
+
+	 			popup.appendChild(text);
+
+	 			var button = document.createElement("input");
+	 			button.setAttribute('type',"button");
+	 			button.setAttribute('value',"Close");
+	 			button.setAttribute('id', "closeP");
+
+	 			button.addEventListener('click',function(event){
+	 				var dv = document.querySelector("#popup");
+	 				document.querySelector("#map").removeChild(dv);
+	 				return false;
+	 			});
+
+	 			popup.appendChild(button);
+
+	 			document.querySelector("#map").appendChild(popup);
+
+			});
+ var map = document.querySelector("#map");
+
+ map.addEventListener("click", function(event){
+ 		//console.log(event);
+ 		if(event.target.class === "MAP")
+ 			return;
+
+ 		if(event.target.nodeName == "DIV"){
+ 			console.log(event.target.id);
+ 			socket.emit('info',{my: event.target.id});
+
+ 			
+
+ 		}
+ });
+
 
 }
