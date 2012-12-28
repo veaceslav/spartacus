@@ -1,28 +1,24 @@
 <!DOCTYPE HTML>
-<head>
-<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="client.js"></script>
+<html>
+	<head>
+		<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="client.js"></script>
 
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
 
-</head>
+	</head>
 
-<body>
+	<body id="body">
 
-<!-- Insert all villages in map -->
-<div id="map" class="map">
-	<!--
-	<div id="popup">
-		<!-- <img src="../images/papirus.png"></img> 
-		<div id="Info">
-		<p id="name">Name: Sarmisegetuza</p>
-		<p id="pop">Population: 150 </p>
-		<p id="descr">Description: A very rich city, with advanced civilization</p>
+		<div id="bar" class="bar">
+			<button class="register">Register</button>
+			<button class="login">Log In</button>
 		</div>
-		<button id="closeP">Close</button>
-	</div>
--->
-</div>
 
-</body>
+		<!-- Insert all villages in map -->
+		<div id="map" class="map"></div>
+
+
+	</body>
+</html>

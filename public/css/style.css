@@ -1,14 +1,13 @@
-#village1{
-  top: 10px;
-  left: 10px;
-  }
-#village2{
-  top: 30px;
-  left: 30px;
+#body {
+  background: #ecd070;
+  background:url('../images/background-papirus.jpg');
 }
 
+.bar {
+  background: #d0a81f;
+  width: 1306px;
+}
 #map {
-  margin-left: 0;
   background:url('../images/background.jpg') no-repeat;
   position: relative;
   width: 1306px;
@@ -44,3 +43,25 @@
   left: 50px;
 }
 
+.login {
+  color: #900;
+  background: #ecd070;
+  font-weight: bold;
+  border: 1px solid #900;
+}
+.login:hover {
+    color: #FFF;
+    background: #900;
+}
+
+.register {
+  color: #900;
+  background: #ecd070;
+  font-weight: bold;
+  border:1px solid #900;
+}
+
+.register:hover {
+    color: #FFF;
+    background: #900;
+}
