@@ -12,9 +12,10 @@ app.get('/', function(req, res){});
 
 server.listen(8080);
 
-//var io = require('socket.io').listen(3000);
+
 var datab = require('./database.js');
 
+/** Open socket and listen for connections **/
 io.sockets.on('connection',function(socket){
 	socket.emit('news',TR.myVillages);
 	socket.on('info', function(data){
@@ -31,21 +32,22 @@ var TR = {
 	myVillages: []
 }
 
+/** Map size and city size **/
 TR.MAX_WIDTH = 1308;
 TR.MAX_HEIGHT = 738;
 TR.VILLAGE_W = 128;
 TR.VILLAGE_H =128;
 
+/** Connect to database and get village list **/
 datab.connect(function()
 {
-  //datab.populateDb();
   datab.getList(function(docs){
-    //console.log(docs);
     TR.myVillages = docs;
   });
 });
 
 /** Get a random nr from Interval **/
+/** Not Used 
 function randomFromInterval(from,to)
 {
     return Math.floor(Math.random()*(to-from+1)+from);
@@ -89,5 +91,5 @@ function getVillage()
   //return generated;
   
 }
-
+*/
 }());

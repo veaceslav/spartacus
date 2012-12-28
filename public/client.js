@@ -3,6 +3,7 @@ window.onload = function(){
  var socket = io.connect();
  socket.on('news',function(data){
  	console.log("Am primit de la server");
+ 	/** Populate map with cities **/
  	for( var i=0;i<data.length;i++)
  	{
  		var village = document.createElement("div");
@@ -15,6 +16,8 @@ window.onload = function(){
  	//socket.emit('my other data',{my: data});
 
  });
+
+ /** Get detailed information about a village and open a scroll with formated information **/
 socket.on('respond',function(resp){
  				console.log("Am primit raspuns" + JSON.stringify(resp));
 
@@ -57,6 +60,9 @@ socket.on('respond',function(resp){
 			});
  var map = document.querySelector("#map");
 
+/** Add a event listener on map, so each clicked city will make a request to server
+ *  for aditional info
+ */
  map.addEventListener("click", function(event){
  		//console.log(event);
  		if(event.target.class === "MAP")

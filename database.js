@@ -31,6 +31,7 @@ exports.connect = function(callback){
 
 };
 
+/** Get village list from database **/
 exports.getList = function (callback)
 {
 		db.collection("villages", function(err, collection){
@@ -40,6 +41,7 @@ exports.getList = function (callback)
 		});
 }
 
+/** Get detailed information about a village **/
 exports.getElement = function(ids,callback)
 {
 	console.log("Ids value " + ids);
@@ -51,6 +53,8 @@ exports.getElement = function(ids,callback)
 		});
 	});
 }
+
+/** Populate an empty database **/
 exports.populateDb = function()
 {
 
