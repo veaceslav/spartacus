@@ -1,0 +1,22 @@
+#loginw {
+  position: absolute;
+  z-index: 1000;
+  background:url("../images/papirus-horizontal.png") no-repeat;
+  width: 400px;
+  height: 267px;
+  top:200px;
+  left: 500px;
+
+} 
+
+#userdiv {
+	position: absolute;
+	top: 	80px;
+	left: 	60px;
+}
+
+#loginsubmit {
+	position: absolute;
+	margin-left: auto;
+
+}
