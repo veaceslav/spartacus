@@ -20,13 +20,13 @@ exports.connect = function(callback){
  			collection.find().toArray(function(err, result){
  				if(result.length === 0){
  					console.log("Populeaza baza de date");
- 					exports.populateDb();
+ 					exports.populateDb(callback);
  				}
  			});
  		});
  	}
  	console.log("Connection Established");
- 	callback();
+ 	//callback();
  });
 
 };
@@ -55,7 +55,7 @@ exports.getElement = function(ids,callback)
 }
 
 /** Populate an empty database **/
-exports.populateDb = function()
+exports.populateDb = function(callback)
 {
 
  	var villages = [
@@ -131,6 +131,7 @@ exports.populateDb = function()
  		collection.insert(villages, {safe:true}, function(err, result)
  		{
  			console.log("Elements added");
+ 			callback();
  		});
  	});
  }
