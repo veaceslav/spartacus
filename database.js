@@ -27,6 +27,7 @@ exports.connect = function(callback){
  		});
  	}
  	console.log("Connection Established");
+ 	callback();
  });
 
 };
