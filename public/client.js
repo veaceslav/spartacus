@@ -13,9 +13,12 @@ window.onload = function(){
  		village.style.left = data[i].left+"px";
  		document.querySelector("#map").appendChild(village);
  	}
- 	//socket.emit('my other data',{my: data});
 
  });
+
+ 	$.getScript("./login.js",function(){
+ 		loadLogin();
+ 	});
 
  /** Get detailed information about a village and open a scroll with formated information **/
 socket.on('respond',function(resp){

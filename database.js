@@ -21,12 +21,12 @@ exports.connect = function(callback){
  				if(result.length === 0){
  					console.log("Populeaza baza de date");
  					exports.populateDb(callback);
+ 					return;
  				}
  			});
  		});
  	}
  	console.log("Connection Established");
- 	//callback();
  });
 
 };
