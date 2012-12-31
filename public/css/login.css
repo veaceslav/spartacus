@@ -1,3 +1,15 @@
+.login {
+  color: #900;
+  background: #ecd070;
+  font-weight: bold;
+  border: 1px solid #900;
+}
+
+.login:hover {
+    color: #FFF;
+    background: #900;
+}
+
 #loginw {
   position: absolute;
   z-index: 1000;
