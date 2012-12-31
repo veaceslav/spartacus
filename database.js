@@ -7,7 +7,7 @@
 
  console.log("Connecting to" + host + ":" + port);
 
- var db = new Db('villages', new Server(host,port, {}), {native_parser: false});
+ var db = new Db('villages', new Server(host,port, {}), {native_parser: false, safe: true});
 
 
 exports.connect = function(callback){

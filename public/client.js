@@ -1,8 +1,6 @@
  
-var socket;
-
 window.onload = function(){
- socket = io.connect();
+ var socket = io.connect();
  socket.on('news',function(data){
  	console.log("Am primit de la server");
  	/** Populate map with cities **/
@@ -17,12 +15,10 @@ window.onload = function(){
  	}
 
  });
- 	/** Load and run login.js script **/
- 	$.getScript("./login.js",function(){
- 		loadLogin(function(token,object){
- 			socket.emit(token,object);
- 		});
- 	});
+
+	require(['login'],function(logIn){
+		logIn.loadLogin(socket);
+	});
 
 	 /** Get detailed information about a village and open a scroll with formated information **/
 	socket.on('respond',function(resp){
