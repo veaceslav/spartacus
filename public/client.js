@@ -20,6 +20,10 @@ window.onload = function(){
 		logIn.loadLogin(socket);
 	});
 
+	require(['register'],function(reg){
+		reg.loadRegister(socket);
+	});
+
 	 /** Get detailed information about a village and open a scroll with formated information **/
 	socket.on('respond',function(resp){
 	 				console.log("Am primit raspuns" + JSON.stringify(resp));
