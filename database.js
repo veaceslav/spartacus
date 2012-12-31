@@ -54,11 +54,20 @@ exports.getElement = function(ids,callback)
 		});
 	});
 }
-
+/** Get user info from database **/
+exports.getUser = function(username,callback)
+{
+	db.collection("users", function(err,collection){
+		collection.find({name: username}).nextObject(function(err,elem){
+			callback(elem);
+		});
+	});
+};
 /** Populate an empty database **/
 exports.populateDb = function(callback)
 {
 
+	/** Populate villages **/
  	var villages = [
  	{
  		id: 0,
@@ -133,6 +142,21 @@ exports.populateDb = function(callback)
  		{
  			console.log("Elements added");
  			callback();
+ 		});
+ 	});
+
+ 	/** Populate database with a test user **/
+ 	var user = [
+ 	{
+ 		id: 	0,
+ 		name: "test",
+ 		token: "abbad13",
+ 		passwd: "testabbad13"
+ 	}
+ 	]
+ 	db.collection('users',function(err, collection){
+ 		collection.insert(user, {safe:true},function(err,result){
+ 			console.log("Users added");
  		});
  	});
  }

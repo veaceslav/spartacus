@@ -1,5 +1,7 @@
 (function(){
   "use strict";
+  var sessionTok = "SlaviQ";
+  var awaitHash = new Object();
 var express = require('express'),
 	app = express(),
 	server = require('http').createServer(app),
@@ -18,14 +20,42 @@ var datab = require('./database.js');
 
 /** Open socket and listen for connections **/
 io.sockets.on('connection',function(socket){
+  console.log("Client " + socket.id + " conectat!");
 	socket.emit('news',TR.myVillages);
+
 	socket.on('info', function(data){
-		console.log(data);
     datab.getElement(data.my,function(rez){
           socket.emit('respond',rez);
     });
 
 	});
+
+  socket.on('login',function(data){
+      datab.getUser(data.my, function(rez){
+        if(rez)
+        {
+          awaitHash[rez.token] = rez.name;
+          socket.emit('token',rez.token);
+
+        }
+        else
+          socket.emit('token',"error");
+      });
+  });
+
+  socket.on('passwd',function(data){
+        datab.getUser(awaitHash[data.token],function(rez){
+
+          if(rez.passwd === data.pass)
+          {
+            socket.emit('ack',{status: "accept", token: sessionTok});
+          }
+          else
+          {
+            socket.emit('ack',{status: "deny", token: "403" });
+          }
+        });
+    });
 }); 
 
 
