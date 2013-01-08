@@ -2,7 +2,9 @@ define(function(){
 	function loadRegister(socket){
 
 		var registerButton = document.querySelector(".register");
-
+		/** Add register fileds
+		 *  on the top of the right scroll
+		 */
 		registerButton.addEventListener("click",function(event){
 			var scrolltext = document.querySelector(".scrolltext");
 
@@ -41,6 +43,9 @@ define(function(){
 				closeB.innerHTML = "Close";
 				newsText.appendChild(closeB);
 
+				/** After pressing close button
+				 *  return to default greeting message
+				 */
 				closeB.addEventListener('click',function(event){
 					var st = document.querySelector("#scrolltext");
 					document.querySelector("#scroll").removeChild(st);

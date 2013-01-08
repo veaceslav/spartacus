@@ -2,7 +2,7 @@
   "use strict";
   var sessionTok = "SlaviQ";
   var awaitHash = new Object();
-var express = require('express'),
+  var express = require('express'),
 	app = express(),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server);
@@ -22,14 +22,14 @@ var datab = require('./database.js');
 io.sockets.on('connection',function(socket){
   console.log("Client " + socket.id + " conectat!");
 	socket.emit('news',TR.myVillages);
-
+/** Send info about clicked village **/
 	socket.on('info', function(data){
     datab.getElement(data.my,function(rez){
           socket.emit('respond',rez);
     });
 
 	});
-
+  /** When login request made, search for user and send password token **/
   socket.on('login',function(data){
       datab.getUser(data.my, function(rez){
         if(rez)
@@ -42,7 +42,7 @@ io.sockets.on('connection',function(socket){
           socket.emit('token',"error");
       });
   });
-
+  /** Compare password token obtained from user to one from database **/
   socket.on('passwd',function(data){
         datab.getUser(awaitHash[data.token],function(rez){
 
@@ -58,7 +58,7 @@ io.sockets.on('connection',function(socket){
     });
 }); 
 
-
+/** cached village array, to minimize database queries **/
 var TR = {
 	myVillages: []
 }
