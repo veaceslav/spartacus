@@ -76,3 +76,7 @@
     color: #FFF;
     background: #900;
 }
+
+.error{
+  color: red;
+}

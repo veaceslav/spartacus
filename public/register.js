@@ -20,21 +20,43 @@ define(function(){
 				newsText.appendChild(title);
 
 			var username = document.createElement("p");
-				username.innerHTML = "Username:<br>"+ "<input id=reguser type=text>";
+				username.innerHTML = "Username:<br>"+
+									 "<input id=reguser type=text>";
 				newsText.appendChild(username);
 
 			var passwd = document.createElement("p");
-				passwd.innerHTML = "Password:<br>" + "<input id=regpasswd type=password>";
+				passwd.innerHTML = "Password:<br>" +
+								   "<input id=regpasswd type=password>";
 				newsText.appendChild(passwd);
 
 			var passwd2 = document.createElement("p");
-				passwd2.innerHTML = "Retype Password:<br> " + "<input id=regpassword2 type=password>";
+				passwd2.innerHTML = "Retype Password:<br> "+
+									"<input id=regpasswd2 type=password>";
 				newsText.appendChild(passwd2);
 
 			var submitB = document.createElement("button");
 				submitB.setAttribute('id',"regsubmit");
 				submitB.setAttribute('class',"resubmit");
 				submitB.innerHTML = "Submit";
+				submitB.addEventListener("click",function(event){
+					var usern = document.querySelector("#reguser");
+					var passw1 = document.querySelector("#regpasswd");
+					var passwd2 = document.querySelector("#regpasswd2");
+
+					if(usern.value === ""
+						|| passw1.value === ""
+						|| passwd2.value === "")
+					{
+						if(!document.querySelector("#regerror"))
+						{
+							var err = document.createElement("p");
+								err.innerHTML = "Please complete all fields";
+								err.setAttribute('class',"error");
+								err.setAttribute('id',"regerror");
+								document.querySelector("#scrolltext").appendChild(err);
+						}
+					}
+				});
 				newsText.appendChild(submitB);
 
 			var closeB = document.createElement("button");

@@ -31,11 +31,13 @@ define(function(){
 				userdiv.appendChild(title);
 
 			var username = document.createElement("p");
-				username.innerHTML = "Username: " + "<input id=\"user\" type=\"text\">";
+				username.innerHTML = "Username: " +
+									 "<input id=\"user\" type=\"text\">";
 				userdiv.appendChild(username);
 
 			var password = document.createElement("p");
-				password.innerHTML = "Password " + "<input id=\"passwd\" type=\"password\">";
+				password.innerHTML = "Password " +
+									 "<input id=\"passwd\" type=\"password\">";
 				userdiv.appendChild(password);
 
 			var submit = document.createElement("button");
@@ -64,13 +66,7 @@ define(function(){
 		 		if(tok === "error")
 		 		{
 		 			console.log("No such username!");
-		 			if(!document.querySelector("#error"))
-		 			{
-			 			var invalid = document.createElement("p");
-			 			invalid.innerHTML ="Invalid Username or Password!";
-			 			invalid.setAttribute('id', "error");
-			 			document.querySelector("#userdiv").appendChild(invalid);
-		 			}
+					displayerr();
 		 			return;
 		 		}
 		 		token = tok;
@@ -95,15 +91,24 @@ define(function(){
 		 	else
 		 	{
 		 		console.log("Failed!");
-		 		if(!document.querySelector("#error"))
-		 			{
-			 			var invalid = document.createElement("p");
-			 			invalid.innerHTML ="Invalid Username or Password!";
-			 			invalid.setAttribute('id', "error");
-			 			document.querySelector("#userdiv").appendChild(invalid);
-		 			}
+				displayerr();
 		 	}
 		 });
+		 /** Display error message under submit button
+		  *  if username is wrong or password doesn't match
+		  *  for security reason, don't tell if it was a username
+		  *  or password error
+		  */
+		 function displayerr(){
+		 	if(!document.querySelector("#loginerror"))
+		 	{
+			 	var invalid = document.createElement("p");
+			 	invalid.innerHTML ="Invalid Username or Password!";
+			 	invalid.setAttribute('id', "loginerror");
+			 	invalid.setAttribute('class',"error");
+			 	document.querySelector("#userdiv").appendChild(invalid);
+		 	}
+		 };
 	}
 
 	return {
