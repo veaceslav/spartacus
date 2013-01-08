@@ -56,6 +56,11 @@ io.sockets.on('connection',function(socket){
           }
         });
     });
+  
+  /** Get register information from client **/
+  socket.on('register',function(data){
+    console.log(JSON.stringify(data));
+  });
 }); 
 
 /** cached village array, to minimize database queries **/

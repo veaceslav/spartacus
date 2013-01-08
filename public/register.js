@@ -40,11 +40,12 @@ define(function(){
 				submitB.innerHTML = "Submit";
 				submitB.addEventListener("click",function(event){
 					var usern = document.querySelector("#reguser");
-					var passw1 = document.querySelector("#regpasswd");
+					var passwd1 = document.querySelector("#regpasswd");
 					var passwd2 = document.querySelector("#regpasswd2");
 
+					/** Check if user filled all necessary fileds **/
 					if(usern.value === ""
-						|| passw1.value === ""
+						|| passwd1.value === ""
 						|| passwd2.value === "")
 					{
 						if(!document.querySelector("#regerror"))
@@ -55,7 +56,31 @@ define(function(){
 								err.setAttribute('id',"regerror");
 								document.querySelector("#scrolltext").appendChild(err);
 						}
+						return;
 					}
+					/** If password and retype password doesn't match,
+					 *  show an error message
+					 */
+					if(passwd1.value != passwd2.value)
+					{
+						var errmsg = document.querySelector("#regerror");
+						if(errmsg)
+							errmsg.innerHTML = "Password doesn't match";
+						else
+						{
+							errmsg = document.createElement("p");
+							errmsg.innerHTML = "Password doesn't match!";
+							errmsg.setAttribute('id',"regerror");
+							errmsg.setAttribute('class',"error");
+							document.querySelector("#scrolltext").appendChild(errmsg);
+						}
+						return;
+					}
+
+					/** Send register information to server **/
+					var mytoken = "customsalt"
+					socket.emit('register',{username: usern.value, token: mytoken,
+											password: passwd1.value+mytoken });
 				});
 				newsText.appendChild(submitB);
 
