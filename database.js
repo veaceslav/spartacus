@@ -163,7 +163,7 @@ exports.populateDb = function(callback)
  		id: 	0,
  		name: "test",
  		token: "abbad13",
- 		passwd: "testabbad13"
+ 		password: "testabbad13"
  	}
  	]
  	db.collection('users',function(err, collection){

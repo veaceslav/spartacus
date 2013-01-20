@@ -39,7 +39,7 @@ io.sockets.on('connection',function(socket){
       datab.getUser(data.my, function(rez){
         if(rez)
         {
-          awaitHash[rez.token] = rez.name;
+          awaitHash[rez.token] = rez;
           socket.emit('token',rez.token);
 
         }
@@ -50,17 +50,20 @@ io.sockets.on('connection',function(socket){
 
   /** Compare password token obtained from user to one from database **/
   socket.on('passwd',function(data){
-        datab.getUser(awaitHash[data.token],function(rez){
+        var rez = awaitHash[data.token];
+        
+        /** Delete temporary entry **/
+        delete awaitHash[data.token];
 
-          if(rez.passwd === data.pass)
-          {
-            socket.emit('ack',{status: "accept", token: sessionTok});
-          }
-          else
-          {
-            socket.emit('ack',{status: "deny", token: "403" });
-          }
-        });
+        if(rez.password === data.pass)
+        {
+          socket.emit('ack',{status: "accept", token: sessionTok});
+        }
+        else
+        {
+          socket.emit('ack',{status: "deny", token: "403" });
+        }
+
     });
   
   /** Get register information from client **/
