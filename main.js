@@ -20,8 +20,9 @@ var datab = require('./database.js');
 
 /** Open socket and listen for connections **/
 io.sockets.on('connection',function(socket){
-  console.log("Client " + socket.id + " conectat!");
+  console.log("Client " + socket.id + " connected!");
 	socket.emit('news',TR.myVillages);
+
 /** Send info about clicked village **/
 	socket.on('info', function(data){
     datab.getElement(data.my,function(rez){
@@ -29,6 +30,10 @@ io.sockets.on('connection',function(socket){
     });
 
 	});
+
+  socket.on('disconnect',function(data){
+    console.log("Client "+ socket.id + " disconnected!");
+  })
   /** When login request made, search for user and send password token **/
   socket.on('login',function(data){
       datab.getUser(data.my, function(rez){
@@ -42,6 +47,7 @@ io.sockets.on('connection',function(socket){
           socket.emit('token',"error");
       });
   });
+
   /** Compare password token obtained from user to one from database **/
   socket.on('passwd',function(data){
         datab.getUser(awaitHash[data.token],function(rez){
@@ -60,6 +66,10 @@ io.sockets.on('connection',function(socket){
   /** Get register information from client **/
   socket.on('register',function(data){
     console.log(JSON.stringify(data));
+    datab.addUser(data,function(){
+      socket.emit("regACK","ack");
+      console.log("Add user ack");
+    });
   });
 }); 
 
@@ -68,7 +78,7 @@ var TR = {
 	myVillages: []
 }
 
-/** Map size and city size **/
+/** Map size and city size - unused**/
 TR.MAX_WIDTH = 1308;
 TR.MAX_HEIGHT = 738;
 TR.VILLAGE_W = 128;

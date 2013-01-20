@@ -7,7 +7,7 @@
 
  console.log("Connecting to" + host + ":" + port);
 
- var db = new Db('villages', new Server(host,port, {}), {native_parser: false, safe: true});
+ var db = new Db('main', new Server(host,port, {}), {native_parser: false, safe: true});
 
 
 exports.connect = function(callback){
@@ -48,8 +48,8 @@ exports.getElement = function(ids,callback)
 	console.log("Ids value " + ids);
 	db.collection("villages",function(err, collection){
 		collection.find({id: parseInt(ids,10)}).nextObject(function(err, elem){
-			console.log("Found the element" + JSON.stringify(elem));
-			console.log(err);
+			//console.log("Found the element" + JSON.stringify(elem));
+			//console.log(err);
 				callback(elem);
 		});
 	});
@@ -63,6 +63,18 @@ exports.getUser = function(username,callback)
 		});
 	});
 };
+
+/** Add new user to database **/
+exports.addUser = function(user, callback)
+{
+	db.collection('users',function(err, collection){
+		collection.insert(user, {safe:true}, function(err,result){
+			console.log("User added!");
+			callback();
+		});
+	});
+}
+
 /** Populate an empty database **/
 exports.populateDb = function(callback)
 {

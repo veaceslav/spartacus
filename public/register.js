@@ -79,8 +79,11 @@ define(function(){
 
 					/** Send register information to server **/
 					var mytoken = "customsalt"
-					socket.emit('register',{username: usern.value, token: mytoken,
-											password: passwd1.value+mytoken });
+					socket.emit('register',{	id: -1,
+												name: usern.value,
+											 	token: mytoken,
+												password: passwd1.value+mytoken 
+											});
 				});
 				newsText.appendChild(submitB);
 
@@ -110,6 +113,19 @@ define(function(){
 			document.querySelector(".scroll").appendChild(newsText);
 
 
+		});
+		/** If registration is successful, 
+		 *  sever will send an ack(acknowledge)
+		 */
+		socket.on('regACK',function(data){
+			if(data == "ack")
+			{
+				var scrolltxt = document.querySelector("#scrolltext");
+				var success = document.createElement("p");
+				success.setAttribute('class',"success");
+				success.innerHTML = "Success!";
+				scrolltext.appendChild(success);
+			}
 		});
 	};
 
