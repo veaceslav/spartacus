@@ -72,8 +72,10 @@ io.sockets.on('connection',function(socket){
 
         if(rez.password === data.pass)
         {
-          socketClients[socket.id] = rez.name;
+          socket.set('nickname',rez.name,function(){
+          socketClients[rez.name] = socket.id;
           socket.emit('ack',{status: "accept", token: sessionTok});
+          });
         }
         else
         {
@@ -87,7 +89,7 @@ io.sockets.on('connection',function(socket){
     console.log(JSON.stringify(data));
     datab.getUser(data.name,function(elem){
       if(elem){
-        socket.emit("regACK","nack");
+        socket.emit("regACK","userexist");
         console.log("User exist in database");
       }
       else{

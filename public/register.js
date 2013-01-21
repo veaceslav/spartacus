@@ -118,22 +118,29 @@ define(function(){
 		 *  sever will send an ack(acknowledge)
 		 */
 		socket.on('regACK',function(data){
+
+			var scrolltxt = document.querySelector("#scrolltext");
+			var oldstatus = document.querySelector("#regstatus");
+			if(oldstatus)
+				scrolltext.removeChild(oldstatus);
+
+			var regStatus = document.createElement("p");
+				regStatus.setAttribute('id',"regstatus");
+
 			if(data == "ack")
 			{
-				var scrolltxt = document.querySelector("#scrolltext");
-				var success = document.createElement("p");
-				success.setAttribute('class',"success");
-				success.innerHTML = "Success!";
-				scrolltext.appendChild(success);
+				regStatus.setAttribute('class',"success");
+				regStatus.innerHTML = "Success!";
 			}
 			else
 			{
-				var scrolltxt = document.querySelector("#scrolltext");
-				var fail = document.createElement("p");
-				fail.setAttribute('class',"error");
-				fail.innerHTML = "Registration failed!";
-				scrolltext.appendChild(fail);
+				if(data == "userexist")
+				{
+					regStatus.setAttribute('class',"error");
+					regStatus.innerHTML = "Username exist, choose another one!";
+				}
 			}
+			scrolltext.appendChild(regStatus);
 		});
 	};
 
