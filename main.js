@@ -1,7 +1,20 @@
 (function(){
   "use strict";
   var sessionTok = "SlaviQ";
+  /** Hash for users that wait for authentification **/
   var awaitHash = new Object();
+  /** Hash that keeps track of players that are online
+   *  name -> session token 
+   */
+  /** TODO: put players into different room,
+   *  for easy message broadcast 
+   */
+  var playersOnline = new Object();
+
+  /** Map client id with username when player
+   *  successfully logged on **/
+  var socketClients = new Object();
+
   var express = require('express'),
 	app = express(),
 	server = require('http').createServer(app),
@@ -32,7 +45,10 @@ io.sockets.on('connection',function(socket){
 	});
 
   socket.on('disconnect',function(data){
-    console.log("Client "+ socket.id + " disconnected!");
+    if(socketClients[socket.id]){
+      delete socketClients[socket.id];
+      console.log("Client "+ socket.id + " removed from socketClients!");
+    }
   })
   /** When login request made, search for user and send password token **/
   socket.on('login',function(data){
@@ -41,7 +57,6 @@ io.sockets.on('connection',function(socket){
         {
           awaitHash[rez.token] = rez;
           socket.emit('token',rez.token);
-
         }
         else
           socket.emit('token',"error");
@@ -57,6 +72,7 @@ io.sockets.on('connection',function(socket){
 
         if(rez.password === data.pass)
         {
+          socketClients[socket.id] = rez.name;
           socket.emit('ack',{status: "accept", token: sessionTok});
         }
         else
@@ -69,11 +85,20 @@ io.sockets.on('connection',function(socket){
   /** Get register information from client **/
   socket.on('register',function(data){
     console.log(JSON.stringify(data));
-    datab.addUser(data,function(){
-      socket.emit("regACK","ack");
-      console.log("Add user ack");
+    datab.getUser(data.name,function(elem){
+      if(elem){
+        socket.emit("regACK","nack");
+        console.log("User exist in database");
+      }
+      else{
+        datab.addUser(data,function(){
+          socket.emit("regACK","ack");
+          console.log("Add user ack");
+        });
+      }
     });
   });
+
 }); 
 
 /** cached village array, to minimize database queries **/

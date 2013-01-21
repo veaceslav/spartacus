@@ -126,6 +126,14 @@ define(function(){
 				success.innerHTML = "Success!";
 				scrolltext.appendChild(success);
 			}
+			else
+			{
+				var scrolltxt = document.querySelector("#scrolltext");
+				var fail = document.createElement("p");
+				fail.setAttribute('class',"error");
+				fail.innerHTML = "Registration failed!";
+				scrolltext.appendChild(fail);
+			}
 		});
 	};
 
