@@ -76,77 +76,86 @@ exports.addUser = function(user, callback)
 }
 
 /** Populate an empty database **/
+
 exports.populateDb = function(callback)
+{
+	populateVillageDb(function(){
+		populateUserDb(function(){
+			populatePlayerStats(callback);
+		});
+	});
+}
+populateVillageDb = function(callback)
 {
 
 	/** Populate villages **/
  	var villages = [
- 	{
- 		id: 0,
- 		name: "Sarmisegetuza",
- 		top: 0,
- 		left: 830,
- 		population: 1500,
- 		description: "The capital of Dacians, one of the most powerful nation."
+	 	{
+	 		id: 0,
+	 		name: "Sarmisegetuza",
+	 		top: 0,
+	 		left: 830,
+	 		population: 1500,
+	 		description: "The capital of Dacians, one of the most powerful nation."
 
- 	},
- 	{
- 		id: 1,
- 		name: "Ankara",
- 		top: 136,
- 		left: 1000,
- 		population: 1350,
- 		description: "Relatively poor city, lots of sands and no water"
- 	},
- 	{
- 		id: 2,
- 		name: "Cairo",
- 		top: 508,
- 		left: 960,
- 		population: 960,
- 		description: "The power of Nil, the scity on the river"
- 	},
- 	{
- 		id: 3,
- 		name: "Sahara City",
- 		top: 587,
- 		left: 396,
- 		population: 830,
- 		description: "Small city in desert Sahara, water is the most precious resource"
- 	},
- 	{
- 		id: 4,
- 		name: "Corsica",
- 		top: 200,
- 		left: 396,
- 		population: 1100,
- 		description: "City situated on small island know for it's production of palm oil"
+	 	},
+	 	{
+	 		id: 1,
+	 		name: "Ankara",
+	 		top: 136,
+	 		left: 1000,
+	 		population: 1350,
+	 		description: "Relatively poor city, lots of sands and no water"
+	 	},
+	 	{
+	 		id: 2,
+	 		name: "Cairo",
+	 		top: 508,
+	 		left: 960,
+	 		population: 960,
+	 		description: "The power of Nil, the scity on the river"
+	 	},
+	 	{
+	 		id: 3,
+	 		name: "Sahara City",
+	 		top: 587,
+	 		left: 396,
+	 		population: 830,
+	 		description: "Small city in desert Sahara, water is the most precious resource"
+	 	},
+	 	{
+	 		id: 4,
+	 		name: "Corsica",
+	 		top: 200,
+	 		left: 396,
+	 		population: 1100,
+	 		description: "City situated on small island know for it's production of palm oil"
 
- 	},
- 	{
- 		id: 5,
- 		name: "Valencia",
- 		top: 194,
- 		left: 99,
- 		population: 1300,
- 		description: "To be continued..."
- 	},
- 	{
- 		id: 6,
- 		name: "Damask",
- 		top: 330,
- 		left: 1155,
- 		population: 1400,
- 		description: "To be continued..."
- 	},
- 	{
- 		id: 7,
- 		name: "Rome",
- 		top: 144,
- 		left: 555,
- 		population: 2000,
- 		description: "To be continued..."
- 	}
+	 	},
+	 	{
+	 		id: 5,
+	 		name: "Valencia",
+	 		top: 194,
+	 		left: 99,
+	 		population: 1300,
+	 		description: "To be continued..."
+	 	},
+	 	{
+	 		id: 6,
+	 		name: "Damask",
+	 		top: 330,
+	 		left: 1155,
+	 		population: 1400,
+	 		description: "To be continued..."
+	 	},
+	 	{
+	 		id: 7,
+	 		name: "Rome",
+	 		top: 144,
+	 		left: 555,
+	 		population: 2000,
+	 		description: "To be continued..."
+	 	}
  	]
 
  	db.collection('villages',function(err, collection){
@@ -157,18 +166,47 @@ exports.populateDb = function(callback)
  		});
  	});
 
- 	/** Populate database with a test user **/
+ }
+
+  	/** Populate database with a test user **/
+populateUserDb = function(callback)
+{
  	var user = [
- 	{
- 		id: 	0,
- 		name: "test",
- 		token: "abbad13",
- 		password: "testabbad13"
- 	}
+	 	{
+	 		id: 	0,
+	 		name: "test",
+	 		token: "abbad13",
+	 		password: "testabbad13"
+	 	}
  	]
  	db.collection('users',function(err, collection){
  		collection.insert(user, {safe:true},function(err,result){
  			console.log("Users added");
+ 			callback();
+ 		});
+ 	});
+ }
+
+populatePlayerStats = function(callback)
+ {
+ 	var playerStat = [
+	 	{
+	 		name: "test",
+	 		level: 5,
+	 		gold: 500,
+	 		silver: 200,
+	 		life: 230,
+	 		spirit: 100,
+	 		strength: 50,
+	 		agility: 45,
+	 		vitality: 50,
+	 		intellect: 100
+	 	}
+ 	]
+ 	db.collection('playstats',function(err, collection){
+ 		collection.insert(playerStat, {safe:true},function(err,result){
+ 			console.log("Player Stats Added");
+ 			callback();
  		});
  	});
  }
