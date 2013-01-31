@@ -79,7 +79,6 @@ define(function(){
 		   */
 		 socket.on('ack',function(data){
 		 	if(data.status === "accept"){
-		 		console.log("Sucessful!");
 		 		if(!document.querySelector("#success"))
 		 			{
 			 			var ok = document.createElement("p");
@@ -90,9 +89,13 @@ define(function(){
 		 	}
 		 	else
 		 	{
-		 		console.log("Failed!");
 				displayerr();
 		 	}
+		 });
+
+		 socket.on('playerData',function(data){
+		 	console.log(JSON.stringify(data));
+
 		 });
 		 /** Display error message under submit button
 		  *  if username is wrong or password doesn't match

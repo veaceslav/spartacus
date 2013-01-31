@@ -74,7 +74,7 @@ exports.addUser = function(user, callback)
 		});
 	});
 }
-
+/** Add level 1 player stats when new user register **/
 addPlayerStats = function(user,callback)
 {
 	var newStats = {
@@ -95,7 +95,15 @@ addPlayerStats = function(user,callback)
 		});
 	});
 }
-
+/** Get player stats from database **/
+exports.getPlayerStats = function(user,callback)
+{
+	db.collection('playerstats',function(err, collection){
+		collection.find({name: user}).nextObject(function(err,elem){
+			callback(elem);
+		});
+	});
+}
 /** Populate an empty database **/
 
 exports.populateDb = function(callback)
@@ -106,6 +114,7 @@ exports.populateDb = function(callback)
 		});
 	});
 }
+/** Add villages to database **/
 populateVillageDb = function(callback)
 {
 
@@ -189,7 +198,7 @@ populateVillageDb = function(callback)
 
  }
 
-  	/** Populate database with a test user **/
+/** Populate database with a test user **/
 populateUserDb = function(callback)
 {
  	var user = [
@@ -208,6 +217,7 @@ populateUserDb = function(callback)
  	});
  }
 
+/** Populate database with test user's player stats **/
 populatePlayerStats = function(callback)
  {
  	var playerStat = [

@@ -34,6 +34,7 @@
   /** Open socket and listen for connections **/
   io.sockets.on('connection',function(socket){
     console.log("Client " + socket.id + " connected!");
+
   	socket.emit('news',TR.myVillages);
 
   /** Send info about clicked village **/
@@ -74,7 +75,16 @@
           {
             socket.set('nickname',rez.name,function(){
             socketClients[rez.name] = socket.id;
-            socket.emit('ack',{status: "accept", token: sessionTok});
+            socket.emit('ack',{status: "accept", token: socket.id});
+
+            /** Get player data from database and send it to client **/
+              datab.getPlayerStats(rez.name,function(result){
+                if(result){
+                  socket.emit('playerData',result);
+                }
+                else
+                  console.log("Error! Can't find player stats for" + rez.name);
+              });
             });
           }
           else
@@ -107,6 +117,7 @@
   var TR = {
   	myVillages: []
   }
+
 
 
   /** Connect to database and get village list **/

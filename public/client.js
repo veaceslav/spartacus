@@ -1,20 +1,19 @@
  
 window.onload = function(){
  var socket = io.connect();
- socket.on('news',function(data){
- 	console.log("Am primit de la server");
- 	/** Populate map with cities **/
- 	for( var i=0;i<data.length;i++)
- 	{
- 		var village = document.createElement("div");
- 		village.className = "village";
- 		village.setAttribute('id',data[i].id);
- 		village.style.top = data[i].top+"px";
- 		village.style.left = data[i].left+"px";
- 		document.querySelector("#map").appendChild(village);
- 	}
+	 socket.on('news',function(data){
+	 	/** Populate map with cities **/
+	 	for( var i=0;i<data.length;i++)
+	 	{
+	 		var village = document.createElement("div");
+	 		village.className = "village";
+	 		village.setAttribute('id',data[i].id);
+	 		village.style.top = data[i].top+"px";
+	 		village.style.left = data[i].left+"px";
+	 		document.querySelector("#map").appendChild(village);
+	 	}
 
- });
+	 });
 
 	require(['login'],function(logIn){
 		logIn.loadLogin(socket);
@@ -26,7 +25,6 @@ window.onload = function(){
 
 	 /** Get detailed information about a village and open a scroll with formated information **/
 	socket.on('respond',function(resp){
-	 				console.log("Am primit raspuns" + JSON.stringify(resp));
 
 		 			var popup = document.createElement("div");
 		 			popup.setAttribute('id', "popup");
@@ -85,7 +83,6 @@ window.onload = function(){
 	 		if(event.target.id == "userdiv")
 	 			return;
 	 		if(event.target.nodeName == "DIV"){
-	 			console.log(event.target.id);
 	 			socket.emit('info',{my: event.target.id});
 
 	 			
