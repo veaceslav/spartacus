@@ -70,6 +70,27 @@ exports.addUser = function(user, callback)
 	db.collection('users',function(err, collection){
 		collection.insert(user, {safe:true}, function(err,result){
 			console.log("User added!");
+			addPlayerStats(user.name,callback);
+		});
+	});
+}
+
+addPlayerStats = function(user,callback)
+{
+	var newStats = {
+		name: user,
+		level: 1,
+		gold: 10,
+		silver: 10,
+		strength: 30,
+		agility: 25,
+		vitality: 20,
+		intellect: 20
+	};
+
+	db.collection('playerstats',function(err, collection){
+		collection.insert(newStats, {safe:true}, function(err,result){
+			console.log("Player Stats added!");
 			callback();
 		});
 	});
@@ -195,15 +216,13 @@ populatePlayerStats = function(callback)
 	 		level: 5,
 	 		gold: 500,
 	 		silver: 200,
-	 		life: 230,
-	 		spirit: 100,
 	 		strength: 50,
 	 		agility: 45,
 	 		vitality: 50,
 	 		intellect: 100
 	 	}
  	]
- 	db.collection('playstats',function(err, collection){
+	db.collection('playerstats',function(err, collection){
  		collection.insert(playerStat, {safe:true},function(err,result){
  			console.log("Player Stats Added");
  			callback();
