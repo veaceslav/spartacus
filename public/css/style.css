@@ -2,6 +2,7 @@
   background: #ecd070;
   background:url('../images/background-papirus.jpg');
   width: 1600px;
+  margin: 0px;
 }
 
 .bar {
@@ -19,7 +20,6 @@
   position: absolute;
   width: 81.5%;
   height: 738px;
-  left: 0px;
 }
 #scroll {
   background:url("../images/scroll-left.png") no-repeat;

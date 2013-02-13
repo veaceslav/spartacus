@@ -52,8 +52,7 @@ define(function(){
 			var closeBttn = document.createElement("button");
 				closeBttn.innerHTML = "Close";
 				closeBttn.addEventListener('click',function(){
-					var lg = document.querySelector(".loginw");
-					document.querySelector("#map").removeChild(lg);
+					removeLoginW();
 				});
 				userdiv.appendChild(closeBttn);
 
@@ -94,9 +93,25 @@ define(function(){
 		 });
 
 		 socket.on('playerData',function(data){
-		 	console.log(JSON.stringify(data));
-
+		 	//console.log(JSON.stringify(data));
+		 	require(['player.js'],function(player){
+		 		window.setTimeout(function(){
+		 			removeLoginW();
+		 			/** Display player window **/
+			 		player.playerScreen(data);
+			 	},1000);
+		 	});
 		 });
+
+		 /** If close button is pressed or login is successful,
+		  *  remove login window.
+		  */
+		 function removeLoginW(){
+		 	var loginW = document.querySelector("#loginw");
+		 	if(loginW){
+		 		document.querySelector("#map").removeChild(loginW);
+		 	}
+		 };
 		 /** Display error message under submit button
 		  *  if username is wrong or password doesn't match
 		  *  for security reason, don't tell if it was a username
