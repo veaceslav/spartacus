@@ -1,7 +1,7 @@
 define(function(){
 	function loadRegister(socket){
 
-		var registerButton = document.querySelector(".register");
+		var registerButton = document.querySelector("#register");
 		/** Add register fileds
 		 *  on the top of the right scroll
 		 */

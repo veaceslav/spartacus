@@ -24,3 +24,42 @@
 .playertext{
 	font-size: 14px;
 }
+
+.navbarDiv{
+	display: inline-block;
+}
+
+#goldDiv{
+	width: 50px;
+	float: right;
+}
+
+#silverDiv{
+	width: 50px;
+	float:right;
+}
+
+#goldImage{
+	width: 40%;
+}
+
+#silverImage{
+	width: 40%;
+}
+
+.navbuttons {
+  color: #900;
+  background: #ecd070;
+  font-weight: bold;
+  border: 1px solid #900;
+  float: right;
+}
+
+.navbuttons:hover {
+    color: #FFF;
+    background: #900;
+}
+
+#playerbar {
+	height: 25px;
+}

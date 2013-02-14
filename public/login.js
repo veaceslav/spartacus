@@ -2,7 +2,7 @@ define(function(){
 	var token;
 	function loadLogin(socket){
 
-		var loginButton = document.querySelector(".login");
+		var loginButton = document.querySelector("#login");
 
 		/** Add the following HTML Code when Log In button clicked
 		 *	<div id="loginw" class="loginw">

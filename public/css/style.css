@@ -1,5 +1,4 @@
 #body {
-  background: #ecd070;
   background:url('../images/background-papirus.jpg');
   width: 1600px;
   margin: 0px;
@@ -65,14 +64,14 @@
 }
 
 
-.register {
+#register {
   color: #900;
   background: #ecd070;
   font-weight: bold;
   border:1px solid #900;
 }
 
-.register:hover {
+#register:hover {
     color: #FFF;
     background: #900;
 }
