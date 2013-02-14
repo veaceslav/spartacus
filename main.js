@@ -46,10 +46,13 @@
   	});
 
     socket.on('disconnect',function(data){
-      if(socketClients[socket.id]){
-        delete socketClients[socket.id];
-        console.log("Client "+ socket.id + " removed from socketClients!");
-      }
+      socket.get('nickname',function(err,name){
+        if(socketClients[name]){
+          delete socketClients[name];
+          socket.leave('registered');
+          console.log("Client " + socket.id + " removed from socketClients!");
+        }
+      });
     })
     /** When login request made, search for user and send password token **/
     socket.on('login',function(data){
@@ -74,17 +77,18 @@
           if(rez.password === data.pass)
           {
             socket.set('nickname',rez.name,function(){
-            socketClients[rez.name] = socket.id;
-            socket.emit('ack',{status: "accept", token: socket.id});
+              socket.join('registered');
+              socketClients[rez.name] = socket.id;
+              socket.emit('ack',{status: "accept", token: socket.id});
 
-            /** Get player data from database and send it to client **/
-              datab.getPlayerStats(rez.name,function(result){
-                if(result){
-                  socket.emit('playerData',result);
-                }
-                else
-                  console.log("Error! Can't find player stats for" + rez.name);
-              });
+              /** Get player data from database and send it to client **/
+                datab.getPlayerStats(rez.name,function(result){
+                  if(result){
+                    socket.emit('playerData',result);
+                  }
+                  else
+                    console.log("Error! Can't find player stats for" + rez.name);
+                });
             });
           }
           else
@@ -110,7 +114,11 @@
         }
       });
     });
-
+    
+    /** Broadcast global chat messages **/
+    socket.on('globalChat',function(data){
+      socket.broadcast.emit('globalChat',data);
+    });
   }); 
 
   /** cached village array, to minimize database queries **/

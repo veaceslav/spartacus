@@ -98,7 +98,7 @@ define(function(){
 		 		window.setTimeout(function(){
 		 			removeLoginW();
 		 			/** Display player window **/
-			 		player.playerScreen(data);
+			 		player.playerScreen(data,socket);
 			 	},1000);
 		 	});
 		 });

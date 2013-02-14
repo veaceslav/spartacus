@@ -10,8 +10,8 @@
 }
 
 #centerElem{
-  position: relative;
-  width: 100%;
+  width:100%;
+  height: 738px;
 }
 #map {
   background:url('../images/mainbackground.png') no-repeat;
@@ -78,4 +78,10 @@
 
 .error{
   color: red;
+}
+
+#statusbar{
+  background: #d0a81f;
+  width: 100%;
+  height: 25px;
 }

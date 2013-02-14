@@ -1,7 +1,22 @@
 define(function(){
 
-	function playerScreen(playerInfo){
+/** This variable with learn if chat is open or closed
+ *  to reuse the same function for opening and closing
+ */
+var chatIsOpen = 0;
+
+/** Remember chat Text even if chat is closed **/
+var chatText = document.createElement("textarea");
+
+/** Global variable holding player's name **/
+var playerName = "";
+
+var socketV;
+
+	function playerScreen(playerInfo,socket){
 		console.log(JSON.stringify(playerInfo));
+		playerName = playerInfo.name;
+		socketV = socket;
 
 		/** Set player information on scroll area **/
 		clearScrollArea();
@@ -10,6 +25,8 @@ define(function(){
 		/** Set player controls on navigation bar **/
 		clearNavigationBar();
 		setUpPlayerControls(playerInfo);
+
+		setStatusBar(socket);
 	}
 
 	/** Set player information on scroll area **/
@@ -67,6 +84,8 @@ define(function(){
 		var scrollTag = document.querySelector("#scroll");
 		scrollTag.appendChild(playStats);
 	};
+
+	/** Set-up player's controls on navigation bar **/
 	function setUpPlayerControls(playerInfo){
 		var navbar = document.querySelector("#bar");
 
@@ -130,6 +149,72 @@ define(function(){
 			playerBar.appendChild(nameButton);		
 
 	}
+
+	/** When player is logged in, set chat button **/
+	function setStatusBar(socket){
+		var chatBtn = document.createElement("button");
+			chatBtn.setAttribute('id',"chatButton");
+			chatBtn.setAttribute('class',"navbuttons");
+			chatBtn.innerHTML = "Global Chat";
+			chatBtn.addEventListener('click',function(){
+				openChat();
+			});
+
+		var statusB = document.querySelector("#statusbar");
+			statusB.appendChild(chatBtn);
+
+		socket.on('globalChat',function(data){
+			var msg = data.name + ": " + data.msg;
+			chatText.innerHTML = chatText.value + msg + "\n";
+		});
+	}
+
+	/** Close and open chat window **/
+	function openChat(){
+
+		var statusB = document.querySelector("#statusbar");
+		var chatBtn = document.querySelector("#chatButton");
+
+		if(chatIsOpen === 0){
+			statusB.removeChild(chatBtn);
+
+		var chatBody = document.createElement("div");
+			chatBody.setAttribute('id',"chatbody");
+			statusB.appendChild(chatBody);
+
+			chatBody.appendChild(chatBtn);
+
+			chatText.setAttribute('id',"chattext");
+			chatBody.appendChild(chatText);
+
+		var chatInput = document.createElement("input");
+			chatInput.setAttribute('type',"text");
+			chatInput.setAttribute('id',"chatinput");
+
+			chatInput.addEventListener("keydown",function(event){
+				if(event.keyCode === 13){
+					var chatInput = document.querySelector("#chatinput");
+					socketV.emit('globalChat',{name: playerName, msg: chatInput.value});
+					chatText.innerHTML = chatText.value + "me: " 
+										+ chatInput.value + "\n";
+					chatInput.value = "";
+
+				}
+			});
+			chatBody.appendChild(chatInput);
+
+			chatIsOpen = 1;
+
+		}
+		else {
+			statusB.removeChild(document.querySelector("#chatbody"));
+			statusB.appendChild(chatBtn);
+
+			chatIsOpen =0;
+		}
+
+	}
+
 	/** Remove all text from scroll on the right **/
 	function clearScrollArea(){
 		var introTxt = document.querySelector("#scrolltext");

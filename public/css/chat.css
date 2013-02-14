@@ -1,0 +1,18 @@
+#chatbody{
+	position: relative;
+	float: right;
+	width:400px;
+	height:250px;
+	border: 2px solid #900;
+	top: -250px;
+	right: 20px;
+}
+
+#chattext {
+	width:97%;
+	height:75%;
+}
+
+#chatinput {
+	width:97%;
+}
